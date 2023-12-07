@@ -30,6 +30,8 @@ resource "azurerm_container_app" "helloworld" {
       cpu    = 0.25
       memory = "0.5Gi"
     }
+    min_replicas = 0
+    max_replicas = 1
   }
 
   ingress {
@@ -49,9 +51,4 @@ resource "azurerm_container_app" "helloworld" {
 
 output "url" {
   value = azurerm_container_app.helloworld.latest_revision_fqdn
-}
-
-output "helloworld" {
-  value     = azurerm_container_app.helloworld
-  sensitive = true # for test purpose
 }
