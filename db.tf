@@ -3,10 +3,10 @@ resource "random_password" "pg_pwd" {
 }
 
 resource "azurerm_subnet" "db" {
-  name                 = "subnet-main"
+  name                 = "subnet-db"
   resource_group_name  = azurerm_resource_group.main.name
   virtual_network_name = azurerm_virtual_network.main.name
-  address_prefixes     = ["10.0.2.0/24"]
+  address_prefixes     = ["10.0.4.0/23"]
   service_endpoints    = ["Microsoft.Storage"]
 
   delegation {
@@ -41,6 +41,7 @@ resource "azurerm_postgresql_flexible_server" "db" {
   private_dns_zone_id    = azurerm_private_dns_zone.db.id
   administrator_login    = "ndl"
   administrator_password = random_password.pg_pwd.result
+  zone                   = "3"
 
   storage_mb = 32768
 
